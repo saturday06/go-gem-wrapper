@@ -27,7 +27,13 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.extensions = ["ext/example/extconf.rb"]
+  spec.extensions = ["ext/example/extconf.rb", "ext/example_rust/extconf.rb"]
+
+  # needed until rubygems supports Rust support is out of beta
+  spec.add_dependency "rb_sys", "~> 0.9.111"
+
+  # only needed when developing or packaging your gem
+  spec.add_development_dependency "rake-compiler", "~> 1.3.0"
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"

@@ -16,6 +16,7 @@ Dir.chdir(File.join(__dir__, "..", "ruby", "testdata", "example")) do
 end
 
 require_relative "../ruby/testdata/example/lib/example"
+require_relative "../ruby/testdata/example/lib/example_rust"
 
 # c.f. https://www.ruby-lang.org/en/news/2020/12/25/ruby-3-0-0-released/
 def tarai(x, y, z) =
@@ -27,6 +28,7 @@ def tarai(x, y, z) =
 $VERBOSE = nil
 
 system("go version", exception: true)
+system("rustc --version", exception: true)
 
 MAX_BENCH_COUNT = 4
 
@@ -53,6 +55,12 @@ Benchmark.ips do |x|
 
   # Go: parallel version (with goroutine)
   x.report("Go: goroutine"){ Example::Benchmark.tarai_goroutine(14, 7, 0, MAX_BENCH_COUNT) }
+
+  # Rust: sequential version
+  x.report("Rust: sequential"){ MAX_BENCH_COUNT.times{ tarai_rust(14, 7, 0) } }
+
+  # Rust: parallel version (with Tokio)
+  x.report("Rust: tokio"){ tarai_rust_tokio(14, 7, 0, MAX_BENCH_COUNT) }
 
   x.compare!
 end

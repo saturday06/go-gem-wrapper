@@ -29,4 +29,6 @@ group :test do
   gem "binding_of_caller", github: "kivikakk/binding_of_caller", branch: "push-yrnnzolypxun"
 end
 
+gem "rb_sys"
+
 gemspec path: "./_gem/"

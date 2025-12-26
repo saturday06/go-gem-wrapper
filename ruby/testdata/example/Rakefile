@@ -20,6 +20,10 @@ Rake::ExtensionTask.new("example", GEMSPEC) do |ext|
   ext.lib_dir = "lib/example"
 end
 
+Rake::ExtensionTask.new("example_rust", GEMSPEC) do |ext|
+  ext.lib_dir = "lib/example_rust"
+end
+
 task default: %i[clobber compile test]
 
 task all: %i[clobber compile test]
